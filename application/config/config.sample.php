@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url'] = 'http://localhost/github_elearning/';
+$config['base_url'] = '';
 
 /*
 |--------------------------------------------------------------------------

@@ -17,6 +17,7 @@ class Config_model extends CI_Model
     public function create_default_table($table = "all")
     {
         $default_table = array(
+            "absensi",
             "kelas",
             "kelas_siswa",
             "login",
@@ -59,6 +60,7 @@ class Config_model extends CI_Model
     public function update_index_default_table()
     {
         $this->db->query("ALTER TABLE `{$this->db->dbprefix}pengumuman` ADD INDEX(`pengajar_id`);");
+        $this->db->query("ALTER TABLE `{$this->db->dbprefix}absensi` ADD INDEX(`siswa_id`);");
         $this->db->query("ALTER TABLE `{$this->db->dbprefix}login_log` ADD INDEX(`login_id`);");
         $this->db->query("ALTER TABLE `{$this->db->dbprefix}komentar` ADD INDEX(`login_id`, `materi_id`);");
         $this->db->query("ALTER TABLE `{$this->db->dbprefix}messages` ADD INDEX(`type_id`, `owner_id`, `sender_receiver_id`);");
@@ -98,6 +100,27 @@ class Config_model extends CI_Model
         ) ENGINE=MyISAM DEFAULT CHARSET=utf8;");
 
         $this->db->query("ALTER TABLE `{$this->db->dbprefix}pengumuman` ADD INDEX(`pengajar_id`);");
+    }
+
+
+    /**
+     * Method untuk membuat tabel absensi
+     */
+    public function create_tb_absensi()
+    {
+        $this->db->query("CREATE TABLE IF NOT EXISTS `{$this->db->dbprefix}absensi` (
+          `id` int(11) NOT NULL AUTO_INCREMENT,
+          `judul` varchar(255) NOT NULL,
+          `konten` text NOT NULL,
+          `tgl_tampil` date NOT NULL,
+          `tgl_tutup` date NOT NULL,
+          `tampil_siswa` tinyint(1) NOT NULL DEFAULT '1',
+          `tampil_pengajar` tinyint(1) NOT NULL DEFAULT '1',
+          `pengajar_id` int(11) NOT NULL,
+          PRIMARY KEY (`id`)
+        ) ENGINE=MyISAM DEFAULT CHARSET=utf8;");
+
+        $this->db->query("ALTER TABLE `{$this->db->dbprefix}absensi` ADD INDEX(`siswa_id`);");
     }
 
     /**
