@@ -1,0 +1,147 @@
+{% extends "layout-private.html" %}
+
+{% block title %}
+Pengaturan - {{ parent() }}
+{% endblock %}
+
+{% block content %}
+<div class="module">
+    <div class="module-head">
+        <h3>Pengaturan</h3>
+    </div>
+    <div class="module-body">
+        {{ get_flashdata('pengaturan')|raw }}
+
+        {% if is_demo_app() %}
+            {{ get_alert('warning', get_demo_msg())|raw }}
+        {% endif %}
+
+        {{ form_open_multipart('welcome/pengaturan', {'class' : 'form-horizontal row-fluid'})|raw }}
+            <div class="control-group">
+                <label class="control-label">Logo sekolah</label>
+                <div class="controls">
+                    {% set logo_sekolah = get_pengaturan('logo-sekolah', 'value') %}
+                    {% if logo_sekolah is empty %}
+                        <img src="{{ logo_url_medium }}">
+                    {% else %}
+                        <a href="{{ site_url('welcome/pengaturan/?delete-img=5') }}" onclick="return confirm('Anda yakin ingin menghapus?')" class="pull-right" title="Hapus logo"><i class="icon-trash"></i></a>
+                        <img src="{{ get_url_image(logo_sekolah) }}" style="max-width: 120px;">
+                    {% endif %}
+                    <br>Ganti logoasdasdasdas <small>(Ukuran terbaik 120 x 122 pixel)</small><br>
+                    <input type="file" name="logo-sekolah">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Nama sekolah <span class="text-error">*</span></label>
+                <div class="controls">
+                    <input type="text" name="nama-sekolah" class="span8" value="{{ set_value('nama-sekolah', get_pengaturan('nama-sekolah', 'value')) }}">
+                    <br>{{ form_error('nama-sekolah')|raw }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Alamat sekolah <span class="text-error">*</span></label>
+                <div class="controls">
+                    <input type="text" name="alamat" class="span8" value="{{ set_value('alamat', get_pengaturan('alamat', 'value')) }}">
+                    <br>{{ form_error('alamat')|raw }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Telpon</label>
+                <div class="controls">
+                    <input type="text" name="telp" class="span5" value="{{ set_value('telp', get_pengaturan('telp', 'value')) }}">
+                    <br>{{ form_error('telp')|raw }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Registrasi siswa</label>
+                <div class="controls">
+                    <label class="radio inline">
+                        <input type="radio" name="registrasi-siswa" value="1" {{ set_radio('registrasi-siswa', '1', ((get_pengaturan('registrasi-siswa', 'value') == '1') ? true)) }}> Tampilkan
+                    </label>
+                    <label class="radio inline">
+                        <input type="radio" name="registrasi-siswa" value="0" {{ set_radio('registrasi-siswa', '0', ((get_pengaturan('registrasi-siswa', 'value') == '0') ? true)) }}> Sembunyikan
+                    </label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Status registrasi siswa</label>
+                <div class="controls">
+                    <label class="radio inline">
+                        <input type="radio" name="status-registrasi-siswa" value="0" {{ set_radio('status-registrasi-siswa', '0', ((in_array(get_pengaturan('status-registrasi-siswa', 'value'), ['', '0'])) ? true)) }}> Pending
+                    </label>
+                    <label class="radio inline">
+                        <input type="radio" name="status-registrasi-siswa" value="1" {{ set_radio('status-registrasi-siswa', '1', ((get_pengaturan('status-registrasi-siswa', 'value') == '1') ? true)) }}> Aktif
+                    </label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Registrasi pengajar</label>
+                <div class="controls">
+                    <label class="radio inline">
+                        <input type="radio" name="registrasi-pengajar" value="1" {{ set_radio('registrasi-pengajar', '1', ((get_pengaturan('registrasi-pengajar', 'value') == '1') ? true)) }}> Tampilkan
+                    </label>
+                    <label class="radio inline">
+                        <input type="radio" name="registrasi-pengajar" value="0" {{ set_radio('registrasi-pengajar', '0', ((get_pengaturan('registrasi-pengajar', 'value') == '0') ? true)) }}> Sembunyikan
+                    </label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Status registrasi pengajar</label>
+                <div class="controls">
+                    <label class="radio inline">
+                        <input type="radio" name="status-registrasi-pengajar" value="0" {{ set_radio('status-registrasi-pengajar', '0', ((in_array(get_pengaturan('status-registrasi-pengajar', 'value'), ['', '0'])) ? true)) }}> Pending
+                    </label>
+                    <label class="radio inline">
+                        <input type="radio" name="status-registrasi-pengajar" value="1" {{ set_radio('status-registrasi-pengajar', '1', ((get_pengaturan('status-registrasi-pengajar', 'value') == '1') ? true)) }}> Aktif
+                    </label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Info Registrasi</label>
+                <div class="controls">
+                    <textarea name="info-registrasi" class="texteditor" style="width:100%; height:300px;">{{ set_value('info-registrasi', get_pengaturan('info-registrasi', 'value'))|raw }}</textarea>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Peraturan E-learning</label>
+                <div class="controls">
+                    <textarea name="peraturan-elearning" class="texteditor" style="width:100%; height:300px;">{{ set_value('peraturan-elearning', get_pengaturan('peraturan-elearning', 'value'))|raw }}</textarea>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label class="control-label">Edit username siswa</label>
+                <div class="controls">
+                    <label class="radio inline">
+                        <input type="radio" name="edit-username-siswa" value="1" {{ set_radio('edit-username-siswa', '1', ((in_array(get_pengaturan('edit-username-siswa', 'value'), ['', '1'])) ? true)) }}> Siswa dapat mengganti username
+                    </label>
+                    <label class="radio inline">
+                        <input type="radio" name="edit-username-siswa" value="0" {{ set_radio('edit-username-siswa', '0', ((get_pengaturan('edit-username-siswa', 'value') == '0') ? true)) }}> Siswa tidak dapat mengganti username
+                    </label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Edit foto siswa</label>
+                <div class="controls">
+                    <label class="radio inline">
+                        <input type="radio" name="edit-foto-siswa" value="1" {{ set_radio('edit-foto-siswa', '1', ((in_array(get_pengaturan('edit-foto-siswa', 'value'), ['', '1'])) ? true)) }}> Siswa dapat mengganti foto
+                    </label>
+                    <label class="radio inline">
+                        <input type="radio" name="edit-foto-siswa" value="0" {{ set_radio('edit-foto-siswa', '0', ((get_pengaturan('edit-foto-siswa', 'value') == '0') ? true)) }}> Siswa tidak dapat mengganti foto
+                    </label>
+                </div>
+            </div>
+           
+
+            {% if is_demo_app() == false %}
+            <div class="control-group">
+                <div class="controls">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </div>
+            {% endif %}
+        {{ form_close()|raw }}
+
+    </div>
+</div>
+{% endblock %}
