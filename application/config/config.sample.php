@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url'] = 'http://localhost/elearning_test/';
+$config['base_url'] = 'http://localhost/github_elearning/';
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +25,9 @@ $config['base_url'] = 'http://localhost/elearning_test/';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = 'f28e101a73c30cd43543d074a2aa112a';
+$config['encryption_key'] = '';
 
-$config['sess_cookie_name'] = 'ci_session_5f071e625cc06';
+$config['sess_cookie_name'] = 'ci_session';
 
 /**
  * @since 1.5
